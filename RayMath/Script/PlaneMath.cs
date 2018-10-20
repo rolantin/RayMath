@@ -5,6 +5,9 @@ using UnityEngine;
 public class PlaneMath : MonoBehaviour {
 
     public Transform mSun;  //规定一个太阳
+ 
+
+    public GameObject Camer;
 
     public LineRenderer inline1;
     public LineRenderer inline2;
@@ -36,6 +39,9 @@ public class PlaneMath : MonoBehaviour {
     void Update()
     {
         mMesh = GetComponent<MeshFilter>().mesh;
+
+        Vector3 camers = Camer.Transform.position;
+
         //选取平面网格的任意三个点
         p1 = mMesh.vertices[20];
         p2 = mMesh.vertices[36];
@@ -49,7 +55,7 @@ public class PlaneMath : MonoBehaviour {
         //计算出三条入射光线向量
         L1 = p1 - mSun.position;
         Debug.Log(L1);
-        L2 = p2 - mSun.position;
+        L2 = camers - p2;
         L3 = p3 - mSun.position;
         //通过博客公式计算出三条反射光线向量
      //   Vector3 c = Vector3.Dot(-L1, n) * n;
@@ -60,10 +66,12 @@ public class PlaneMath : MonoBehaviour {
         Vector3 s = a *2;
         outRay1 = -L1 + s;
 
+      //  Vector3 fenesl = Vector3.Dot()
+
 
       // outRay1 = -L1 + (2*(L1 - Vector3.Dot(-L1,n)*n ));
         //outRay1 =L2 - Vector3.Dot (L1, n) * n;
-        outRay2 = L2 - 2 * Vector3.Dot(L2, n) * n;
+        outRay2 = Vector3.Dot(L1,n)* n;
         outRay3 = L3 - 2 * Vector3.Dot(L3, n) * n;
         //计算完了，这里我们实际展示下光线的路径
         AssitDraw();
